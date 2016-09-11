@@ -37,9 +37,9 @@ int main()
       // all insertion points.
       std::uniform_int_distribution<int> rand(0, i - 1);
 
-      int num = rand(prbg);             // Generate a random number
-      auto iter = find_lower(seq, num); // Find the insertion point
-      seq.insert(iter, num);            // Insert the element.
+      int num = rand(prbg);                // Generate a random number
+      auto iter = linear_search(seq, num); // Find the insertion point
+      seq.insert(iter, num);               // Insert the element.
     }
 
     // Get the current system time in nanoseconds.

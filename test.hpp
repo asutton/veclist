@@ -6,7 +6,6 @@
 
 
 // Define the maximum number of elements for the test.
-// constexpr int N = 100000; 
 constexpr int N = 50000; 
 
 // Defines the "step" size of the test. The test starts with an initial
