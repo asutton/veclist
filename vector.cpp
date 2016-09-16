@@ -1,8 +1,10 @@
 // Copyright (C) 2016 Andrew Sutton
 // All rights reserved.
 
+#include <algorithm>
 #include <chrono>
 #include <iostream>
+#include <numeric>
 #include <random>
 #include <vector>
 
@@ -24,6 +26,12 @@ int main()
   // Run the test a number of times.
   for (int n = S; n <= N; n += S) {
 
+    // Pre-generate all the numbers we're going to pick and put them in
+    // a random order.
+    std::vector<int> rand(n);
+    std::iota(rand.begin(), rand.end(), 0);
+    std::shuffle(rand.begin(), rand.end(), prbg);
+
     // Get the starting time point. The type is deduced because it's hard
     // to spell (it is std::chrono::system_clock::time_point).
     auto start = std::chrono::system_clock::now();
@@ -31,15 +39,10 @@ int main()
     // The actual test.
     std::vector<int> seq;
     for (int i = 0; i < n; ++i) {
-      // Create a random number generator whose values will be in the the
-      // range [0, i). Note that the range of random numbers depends on the 
-      // size of the sequence. This guarantees an equal probability of choosing
-      // all insertion points.
-      std::uniform_int_distribution<int> rand(0, i - 1);
-
-      int num = rand(prbg);                // Generate a random number
-      auto iter = linear_search(seq, num); // Find the insertion point
-      seq.insert(iter, num);               // Insert the element.
+      int num = rand.back();                    // Get the next random number
+      rand.pop_back();
+      auto iter = linear_lower_bound(seq, num); // Find the insertion point
+      seq.insert(iter, num);                    // Insert the element
     }
 
     // Get the current system time in nanoseconds.

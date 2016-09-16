@@ -11,7 +11,7 @@
 //
 // This is a linear search version of std::lower_bound.
 template<typename I, typename T>
-I linear_search(I first, I limit, T const& value)
+I linear_lower_bound(I first, I limit, T const& value)
 {
   while (first != limit) {
     if (!(*first < value))
@@ -29,9 +29,9 @@ I linear_search(I first, I limit, T const& value)
 // directly using iterators. 
 template<typename C, typename T>
 typename C::const_iterator
-linear_search(C const& container, T const& value)
+linear_lower_bound(C const& container, T const& value)
 {
-  return linear_search(container.begin(), container.end(), value);
+  return linear_lower_bound(container.begin(), container.end(), value);
 }
 
 

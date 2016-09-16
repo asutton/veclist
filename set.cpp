@@ -7,6 +7,7 @@
 #include <list>
 #include <numeric>
 #include <random>
+#include <set>
 
 #include "algorithm.hpp"
 #include "test.hpp"
@@ -22,7 +23,7 @@ int main()
   // seeded from the system's random device.
   // std::random_device rd;
   // std::mt19937 prbg(rd());
-
+  
   // Run the test a number of times.
   for (int n = S; n <= N; n += S) {
 
@@ -36,13 +37,13 @@ int main()
     // to spell (it is std::chrono::system_clock::time_point).
     auto start = std::chrono::system_clock::now();
 
-    // The actual test.
-    std::list<int> seq;
+    // The actual test. This is kind of a dumb test... All we're doing
+    // is copying the original vector.
+    std::set<int> seq;
     for (int i = 0; i < n; ++i) {
-      int num = rand.back();                    // Get the next random number
+      int num = rand.back(); // Get the next random number
       rand.pop_back();
-      auto iter = linear_lower_bound(seq, num); // Find the insertion point
-      seq.insert(iter, num);                    // Insert the element
+      seq.insert(num);       // Insert the element.
     }
 
     // Get the current system time in nanoseconds.
